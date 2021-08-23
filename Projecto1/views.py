@@ -58,7 +58,7 @@ def registar(request):
     
     if request.user.is_active:
         return redirect('/bienvenido/', foo='bar')
-    
+        
     form = Registro()
     if request.method=="POST":
         form = Registro(data=request.POST)
