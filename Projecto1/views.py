@@ -74,7 +74,6 @@ def registar(request):
             user = user = User.objects.create_user(username=request.POST.get("nick"), email=request.POST.get("correo"),password=request.POST.get("clave") )
             user.save()
             login(request,user)
-            request.session[request.POST.get("nick")]
             ctx={"saludo": "Bienvenido"}
             return redirect('/bienvenido/')
     ctx={"saludo": "Bienvenido Ingresa Usuario", "form": form } 
