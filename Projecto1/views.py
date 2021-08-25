@@ -84,10 +84,14 @@ def csrf_failure(request, reason=""):
     return HttpResponse(pantilla)
 
 
-
+@login_required
 def cerrar_login(request):
     logout(request)
-    return HttpResponse('SECION CERRADA')
+    context = { 
+            "nombre":"",
+            "clave": "", 
+        }
+    return render(request, 'home.html', context)
 
 @login_required
 def bienvenido(request):
@@ -98,3 +102,13 @@ def bienvenido(request):
     
     print(request.user.is_active)
     return render(request, 'def.html', context)
+
+def index(request):
+    
+    if request.user.is_active:
+        return redirect('/bienvenido/', foo='bar')
+    context = { 
+            "nombre":"",
+            "clave": "", 
+        }
+    return render(request, 'home.html', context)
