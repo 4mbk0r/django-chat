@@ -32,7 +32,7 @@ class Formulario(forms.Form):
             # conditions to be met for the username length
             dbf = firestore.client()
             ref = dbf.collection(u'usuarios')
-            doc = ref.document(u''+nick).get()            
+            doc = ref.document(u''+str(nick)).get()            
             if doc.exists:
                 doc = doc.to_dict()
                 print (doc,str(doc['clave']), passw)
