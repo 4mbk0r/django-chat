@@ -1,3 +1,4 @@
+from os import error
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Template,Context, context
@@ -8,7 +9,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required   
 #importar formulario
 from Projecto1.forms import Formulario,Registro
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 
 import firebase_admin
@@ -29,16 +30,9 @@ firebase_admin.initialize_app(cred,{
 dbf = firestore.client()
 
 
-def saludo(request):
-    form = Formulario()
-    ctx={"saludo": "Bienvenido Ingresa Usuario", "form": form } 
-    return render( request, 'login.html', ctx)
-
-from django.contrib.auth import authenticate
-
 
 @csrf_protect
-def accion(request):
+def login_inicio(request):
     if request.user.is_active:
         return redirect('/bienvenido/', foo='bar')
     form = Formulario()
@@ -80,19 +74,6 @@ def registar(request):
     return render( request,  'registro.html', ctx)
 
 
-def validar_firebase_nick(nick):
-    ref = dbf.collection(u'usuarios')
-    docs = ref.stream()
-    for doc in docs:
-        print(f'{doc.id} => {doc.to_dict()}')        
-    return ref.document(u''+nick).get().exists
-
-@csrf_protect
-def validar_registro(request):
-    pass
-    
-
-
 def csrf_failure(request, reason=""):
     print(request)
     doc_pantilla = open("E:/service worker/chatbot_django/Projecto1/Projecto1/template/defauld.html")
@@ -103,23 +84,6 @@ def csrf_failure(request, reason=""):
     return HttpResponse(pantilla)
 
 
- 
-# Importo Firebase Admin SDK 
-
-def firebase(request):
-
-    ref = dbf.collection(u'BFQ') 
-    for doc in ref.stream():
-        print(ref.document('0').get().exists)
-	# Llamo los datos que se encuentran en la tabla 'postres' 
-    print ( ref.where(u'id', u'==', 1).get())
-
-    context = { 
-            "nombre":"",
-            "clave": "", 
-        }
-
-    return render(request, 'defauld.html', context)
 
 def cerrar_login(request):
     logout(request)
