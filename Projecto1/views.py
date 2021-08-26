@@ -101,7 +101,7 @@ def bienvenido(request):
         }
     
     print(request.user.is_active)
-    return render(request, 'def.html', context)
+    return render(request, 'salachat.html', context)
 
 def index(request):
     
@@ -112,3 +112,10 @@ def index(request):
             "clave": "", 
         }
     return render(request, 'home.html', context)
+
+
+
+def chatbot(request):
+    context = {}
+
+    return render(request, 'salachat.html', context)
