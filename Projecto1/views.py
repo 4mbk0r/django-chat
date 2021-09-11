@@ -119,3 +119,9 @@ def chatbot(request):
     context = {}
 
     return render(request, 'salachat.html', context)
+
+
+def quiz(request):
+    context = {}
+
+    return render(request, 'salachat2.html', context)

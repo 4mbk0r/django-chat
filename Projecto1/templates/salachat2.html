@@ -1,7 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,8 +23,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
     <!-- firestore -->
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
-
-    <script src="{% static 'js/conexion-firebase.js'%}"></script>
+    
     <script href="{% static 'js/popper.min.js' %}"></script>
     <script href="{% static 'js/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js' %}"></script>
     <script href="{% static 'js/bootstrap-5.0.2-dist/js/bootstrap.min.js' %}"></script>
@@ -59,16 +58,14 @@
     </script>
 
     <div class="container ">
-        <div id="contenido-srollx" class="row fondo-correcto contenido-chat">
-            <div class="col ">
-                <div id="chat-contenido" class="">
-                    <div id="chatbox" class=" " id="chat-content">
-
-                    </div>
+        <div id="contenido-srollx" class="row d-flex align-items-end justify-content-center align-middle fondo-correcto contenido-chat"> <!--fondo-correcto contenido-chat-->
+            <div class="card align-middle d-flex justify-content-center w-75">
+                <div class="card-body">
+                  <h5 id="chatbox" class="card-title text-justify"> </h5>
+                  
+                  
                 </div>
-            </div>
-
-
+              </div>
             <div class="row">
                 <div id="userInput" class="container bg-transparent fixed-bottom">
                     <form>
@@ -158,6 +155,7 @@
                 }
             }
             if ($("#escribir_text").val() != "") {
+                console.log(fb.base_dato);
                 var data = fb.escribir(selecid, selectedValue);
                 fb.respuesta(parseInt(selecid) + 1);
             }
@@ -169,7 +167,8 @@
         $("#escribir_text").val("");
         $("#escribir_text").val(numero);
     }
-
+    var usuario = $("#usuario").val();
+    console.log("------:::: "+usuario);
 </script>
 
 </html>

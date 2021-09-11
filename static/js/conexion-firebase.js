@@ -1,5 +1,6 @@
 
 class Conexion {
+    base_dato;
     constructor() {
         var firebaseConfig = {
             apiKey: "AIzaSyAa4MnDZMCgyHtn8u5I2xFpJQCtnPnLMo0",
@@ -11,11 +12,13 @@ class Conexion {
             measurementId: "G-RLRMMVLDCB"
         };
         firebase.initializeApp(firebaseConfig);
+        this.base_dato = ""
+        
     }
-    conversacion() {
+    conversacion(base) {
         var db = firebase.firestore();
         var div_scroll="contenido-srollx"
-
+        this.base_dato = base
         var pregunta = db.collection('BFQ').doc('0');
         var setWithMerge = pregunta.set({
             pregunta: "Hola, Para conocerte mas te hare unas preguntas.",
@@ -26,8 +29,6 @@ class Conexion {
         }
             , { merge: true });
         /*
-
-
         var pregunta = db.collection('BFQ').doc('1');
         var setWithMerge = pregunta.set({
             pregunta: "Lo que he realizado hasta ahora en mi vida lo hice de la mejor manera posible",
@@ -62,7 +63,8 @@ class Conexion {
         console.log("nonono", numero);
         var db = firebase.firestore();
         try {
-            var docRef = await db.collection("BFQ").doc(idpregunta+"");   
+            console.log("----"+this.base_dato)
+            var docRef = await db.collection(this.base_dato+"").doc(idpregunta+"");   
         } catch (error) {
             console.error(error)
         }
@@ -138,7 +140,7 @@ class Conexion {
         var db = firebase.firestore();
         
         try {
-            var docRef = await db.collection("BFQ").doc(n_pregunta);    
+            var docRef = await db.collection(this.base_dato).doc(n_pregunta);    
         } catch (error) {
             console.error(error)
         }
@@ -199,8 +201,8 @@ var alto = (window.innerHeight);
 alert("El tamaño de la ventana actual: " + ancho + " de ancho "+alto+" de alto"); 
 ^*/
 fb = new Conexion();
-fb.conversacion();
-fb.respuesta(0);
+fb.conversacion("saludo");
+fb.respuesta(1);
 
 /*
 
