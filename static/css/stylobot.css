@@ -654,3 +654,12 @@ textarea {
     left: 50% !important;
     transform: translateX(-50%);
   }
+
+
+
+  .load-bar{
+    width: 100%;
+    background-color: blue;
+    height: 8px;
+    position: relative;
+  }

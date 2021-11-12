@@ -26,35 +26,44 @@ class Conexion {
         } catch (error) {
             console.error(error)
         }
+        
         var query_w;
         docRef.get().then((doc) => {
             if (doc.exists) {
                 query_w = doc.data();
-                if(typeof( query_w.base_actual)!= "undefined" ){
+                if (typeof (query_w.base_actual) != "undefined") {
                     this.set_base_id(query_w.base_actual, query_w.numero);
                     this.respuesta("");
+                    
                 }
-               
+
             } else {
                 // doc.data() will be undefined in this case
                 console.log("_-----_");
                 this.base_dato = base;
+                
+                console.log("_-----_"+base);
             }
         }).catch((error) => {
             console.log("Error getting document:", error);
-        });        
+        });
+
+        console.log(usuario +"+"+this.numero_id)
+        
     }
-    set_base_id(base, id){
-        this.base_dato=base;
-        this.numero_id=id;
+    set_base_id(base, id) {
+        this.base_dato = base;
+        this.numero_id = id;
     }
     set_base(name_base) {
         this.base_dato = name_base;
         this.numero_id = 0;
     };
     async respuesta(numero) {
+        
         var usuario = $("#usuario").val();
         var idpregunta = this.numero_id;
+        
         var db = firebase.firestore();
         try {
             var docRef = await db.collection(this.base_dato + "").doc(idpregunta + "");
@@ -79,6 +88,7 @@ class Conexion {
                     console.log(nombre_base);
                     if (typeof (nombre_base) != "undefined") {
                         this.set_base(nombre_base);
+                        console.log(nombre_base);
                     }
                 }
                 catch (error) {
@@ -94,7 +104,7 @@ class Conexion {
                 $("#escribir_text").val("");
                 opciones.forEach(element => {
                     mensajeinicio += '<input type="radio" class="btn-check btn-ms"  onclick="mostar(value)" name="options" value="' + opciones[valor] + '" id="' + idpregunta + '-' + valor + '" autocomplete="off">'
-                    mensajeinicio += '<label class="btn btn-primary justify-content-around pulse " for="' + idpregunta + "-" + valor + '">' + opciones[valor];
+                    mensajeinicio += '<label class="btn btn-primary btn-outline-light justify-content-around pulse " for="' + idpregunta + "-" + valor + '">' + opciones[valor];
 
                     //<input type="radio" class="btn-check" name="options" value="' + valor + '" id="' + idpregunta + '" autocomplete="off" checked>';
                     mensajeinicio += '</label>';
@@ -109,6 +119,7 @@ class Conexion {
                 var objDiv = document.getElementById("contenido-srollx");
                 objDiv.scrollTop = objDiv.scrollHeight;
                 this.numero_id++;
+                
             } else {
                 // doc.data() will be undefined in this case
                 console.log("No such document!");
@@ -119,38 +130,43 @@ class Conexion {
     }
 
 
-
     async escribir(n_pregunta, respuesta) {
 
         var userHtml = this.escribir_mensaje_usuario(respuesta);
         $("#chatbox").append($.parseHTML(userHtml));
         $("#escribir_text").val("");
         var objDiv = document.getElementById("contenido-srollx");
-        console.log("_______.:::::::______________")
+        console.log("_______:::::::______________")
         objDiv.scrollTop = objDiv.scrollHeight;
         if (this.base_dato == "BFQ") {
-            console.log("____"+this.base_dato);
+            
+            console.log("____" + this.base_dato);
             var usuario = $("#usuario").val();
-            var booking = { some: "data" };
             var db = firebase.firestore();
             var userRef = db.collection("usuario_resp").doc(usuario);
             userRef.get().then((doc) => {
                 if (doc.exists) {
-                    userRef.collection('respuesta').doc((this.numero_id-1)+"").set({
+                    userRef.collection('respuesta').doc((this.numero_id-1) + "").set({
                         respuesta: respuesta
-                      })
-                    userRef.update({"numero":this.numero_id})
+                    })
+                    userRef.update({ "numero": this.numero_id})
                 } else {
                     db.collection("usuario_resp").doc(usuario).set({
                         base_actual: "BFQ",
                         numero: "0",
-                        respuesta: {}, 
                     });
                 }
             }).catch((error) => {
                 console.log("Error getting document:", error);
             });
+            
         }
+        if (this.base_dato == "despedida") {
+            var mensaje  = '<form action="/salachat"> la fase uno ya acabo<br>Listo para la fase dos<br><input type="submit"></form>'
+            $("#chatbox").empty();
+            $("#chatbox").append($.parseHTML(mensaje));
+        }
+       
     }
     escribir_mensaje_bot(contenido) {
         var mesajeinicio = '<div class="media media-chat">' + '<div class="media-body">';

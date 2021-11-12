@@ -57,6 +57,11 @@
         }
     </script>
 
+    <div id="load-bar" class="load-bar">
+        <span id=progreso class="progreso">
+        </span>
+
+    </div>
     <div class="container ">
         <div id="contenido-srollx" class="row d-flex align-items-end justify-content-center align-middle fondo-correcto contenido-chat"> <!--fondo-correcto contenido-chat-->
             <div class="card align-middle d-flex justify-content-center w-75">
@@ -66,11 +71,12 @@
                   
                 </div>
               </div>
+              
             <div class="row">
                 <div id="userInput" class="container bg-transparent fixed-bottom">
                     <form>
                         <div class="row">
-
+                            
                             <div id="m_opcion_eleccion" class="col d-flex align-items-end justify-content-around">
 
                                 <div id="ele_opciones"
@@ -116,6 +122,7 @@
             </div>
         </div>
         <br>
+        <div id="endpoint-url-div" url="{% url 'salachat' %}" style="display: none;"></div>
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -126,8 +133,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Selecciona entre los numero:<br>
-                        <p class="align-content-center">1 2 3 4 5</p>
+                       marque la respuesta que describa mejor cuál es su forma habitual de pensar, sentir o actuar. <br>5.- completamente VERDADERO para mí<br>4.- bastante VERDADERO para mí<br>3.- ni VERDADERO ni FALSO para mí<br>2.- bastante FALSO para mí<br>1.- completamente FALSO para mí
 
 
                     </div>

@@ -94,15 +94,15 @@ class Registro(forms.Form):
         except KeyError:
             return forms.ValidationError('The password field was blank.')
         return nick
-    
-    def clean_clave(self):
+    ##
+    """def clean_clave(self):
         clave1 = self.cleaned_data.get('clave')
         try:
             validate_password(clave1)
         except ValidationError as e:
             raise forms.ValidationError("contraseña comun o my corta")
         
-        return clave1
+        return clave1"""
     def clean(self):
         try:
             clave1 = self.cleaned_data.get('clave')

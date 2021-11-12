@@ -101,7 +101,7 @@ def bienvenido(request):
         }
     
     print(request.user.is_active)
-    return render(request, 'salachat.html', context)
+    return render(request, 'salachat2.html', context)
 
 def index(request):
     
@@ -114,13 +114,13 @@ def index(request):
     return render(request, 'home.html', context)
 
 
-
+@login_required
 def chatbot(request):
     context = {}
 
     return render(request, 'salachat.html', context)
 
-
+@login_required
 def quiz(request):
     context = {}
 
