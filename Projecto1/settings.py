@@ -10,8 +10,16 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from pickle import TRUE
+import dj_database_url
+import django_heroku
 from pathlib import Path
 import os
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,8 +36,18 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+STATS_FILE = os.path.join(BASE_DIR, 'webpack-stats.json')
+
 # Application definition
 
+
+CORS_ORIGIN_WHITELIST = [
+    'http://127.0.0.1:8080',
+]
+CORS_ORIGIN_ALLOW_ALL = True
+STATICFILES_DIRS = [ 
+  os.path.join(BASE_DIR, './cara/dist/static'), 
+]
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,6 +57,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'bootstrap4',
+    'vue_app.apps.VueAppConfig',
+    'book',
+    'rest_framework',
+    'corsheaders',
+    
+
 ]
 
 MIDDLEWARE = [
@@ -49,8 +73,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware', 
 ]
-
 
 
 ROOT_URLCONF = 'Projecto1.urls'
@@ -58,7 +84,8 @@ ROOT_URLCONF = 'Projecto1.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'Projecto1/templates')],
+        #'DIRS': [os.path.join(BASE_DIR, 'Projecto1/templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'cara/dist')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -104,7 +131,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -122,36 +148,35 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
 
-DEBUG=True
+DEBUG = True
 
-SITE_ID=1
+SITE_ID = 1
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-
+#-----coregido para vue
+#STATIC_URL = '/static/'
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+#------
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Update database configuration with $DATABASE_URL.
-import dj_database_url  
-db_from_env = dj_database_url.config(conn_max_age=500)  
+db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  
-STATIC_URL = '/static/'# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (  
-    os.path.join(BASE_DIR, 'static'),
-)
+###STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+###STATIC_URL = '/static/'  # Extra places for collectstatic to find static files.
+###STATICFILES_DIRS = (
+###    os.path.join(BASE_DIR, 'static'),
+###)
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
-import django_heroku
 django_heroku.settings(locals())

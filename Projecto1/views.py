@@ -125,3 +125,7 @@ def quiz(request):
     context = {}
 
     return render(request, 'salachat2.html', context)
+
+def test_new(request):
+    context = {}
+    return render(request, 'nuevo_test.html', context)
