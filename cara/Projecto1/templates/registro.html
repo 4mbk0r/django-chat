@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+{% block foo %}
+{% include "head.html" %}
+{% include "nav.html" %}
+
+{% endblock %}
+
+
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+<body class="container justify-content-center text-center">
+
+
+    {{mensaje}}
+    <h1> {{saludo}}</h1>
+    {% block content %}
+    <form action="/registro/" class="color_formulario container" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form  %}
+        {% buttons %}
+        <input type="submit" class="btn btn-primary" />
+        {% endbuttons %}
+    </form>
+
+    {% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+{% block foo %}
+{% include "head.html" %}
+{% include "nav.html" %}
+{% endblock %}
+
+<body class="container justify-content-center text-center">
+    <div class="container colorhome card mb-3">
+        <div class="row align-items-start card-body">
+            <div class="col d-flex justify-content-center d-flex align-items-center align-self-center">
+                <img src="{% static 'img/Chatbot.png' %}" width="200" height="200">
+            </div>
+            <div class="col">
+                    <div class="card text-center">
+                        <div class="card-body">
+                          <h5 class="card-title">HOLA!!!!</h5>
+                          <p class="card-text">Soy un Chatbot, 
+                            haré todo lo posible para ayudarte.</p>
+                          <p class="card-text">Pero primero registrate</p>
+                          <a href="{% url 'registro' %}" class="btn btn-primary">Registrate</a>
+                          <p class="card-text">Pero si ya tienes cuenta inicia sesion</p>
+                          <a href="{% url 'inicio' %}" class="btn btn-primary">Inicia Sesion</a>
+                          
+                        </div>
+                        <div class="card-footer text-muted">
+                          Te espero!!!
+                        </div>
+                      </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>
